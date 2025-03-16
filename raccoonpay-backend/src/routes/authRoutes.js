@@ -72,7 +72,7 @@ router.post('/register', async (req, res) => {
         // Confirmar la transacción
         await transaction.commit();
         // Enviar correo con el token
-        const activationLink = `https://5b11-38-52-155-66.ngrok-free.app/api/activate/${token}`;
+        const activationLink = `${process.env.API_URL}/activate/${token}`;
         await transporter.sendMail({
             from: '"RaccoonPay" <mensajesconapi@gmail.com>',
             to: correo,
@@ -210,7 +210,7 @@ router.post('/recovery-password', async (req, res) =>{
       from: '"RaccoonPay" <mensajesconapi@gmail.com>',
       to: correo,
       subject: 'Recuperación de contraseña',
-      text: `Usa este enlace para cambiar tu contraseña: https://5b11-38-52-155-66.ngrok-free.app/api/reset-password?token=${token}`
+      text: `Usa este enlace para cambiar tu contraseña: ${process.env.API_URL}/reset-password?token=${token}`
     };
     await transporter.sendMail(mailOptions);
     res.status(200).json({ message: 'Correo enviado. Revisa tu bandeja de entrada.' });
