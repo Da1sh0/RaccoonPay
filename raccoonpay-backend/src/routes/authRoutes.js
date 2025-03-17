@@ -14,6 +14,18 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS
   }
 });
+// Tipos de Identificación
+router.get("/types-identification", async (req, res) => {
+  try {
+    const pool = await sql.connect();
+    const result = await pool.request().query("SELECT id_tipo_identificacion, nombre_tipo FROM tipos_identificacion");
+    res.json(result.recordset);
+  } catch (error) {
+    console.error("Error al obtener tipos de identificación:", error);
+    res.status(500).json({ message: "Error en el servidor" });
+  }
+});
+
 // Registro de usuario
 router.post('/register', async (req, res) => {
   const { nombres, apellidos, identificacion, tipo_identificacion, celular, correo, cargo, login, contrasenna, perfil } = req.body;

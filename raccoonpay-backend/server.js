@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 3000; // Puerto de escucha
 // Middleware para manejar solicitudes JSON
+app.use(cors());
 app.use(express.json());
 // Ruta de Prueba
 app.get('/', (req, res) => {

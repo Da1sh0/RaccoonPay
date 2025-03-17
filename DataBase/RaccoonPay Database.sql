@@ -12,7 +12,6 @@ CREATE TABLE personas (
     apellidos VARCHAR(100) NOT NULL,
     identificacion VARCHAR(50) UNIQUE NOT NULL,
     tipo_identificacion INT NOT NULL,
-    año_nacimiento INT NOT NULL,
     celular VARCHAR(20) UNIQUE NOT NULL,
     correo VARCHAR(100) UNIQUE NOT NULL,
     cargo VARCHAR(100) NOT NULL,
@@ -41,7 +40,8 @@ CREATE TABLE usuarios (
     FOREIGN KEY (id_persona) REFERENCES personas(id_persona),
     FOREIGN KEY (id_perfil) REFERENCES perfiles(id_perfil)
 )
-
+ALTER TABLE usuarios
+ADD activo BIT NOT NULL DEFAULT 0
 -- Periodos
 CREATE TABLE periodos (
     id_periodo INT PRIMARY KEY IDENTITY(1,1),
@@ -52,6 +52,13 @@ CREATE TABLE periodos (
     fecha_modificacion DATETIME DEFAULT GETDATE(),
     FOREIGN KEY (id_persona) REFERENCES personas(id_persona)
 )
+ALTER TABLE periodos 
+ADD fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL;
+ALTER TABLE periodos  
+ALTER COLUMN mes NVARCHAR(50);
+EXEC sp_rename 'periodos.mes', 'nombre', 'COLUMN';
+
 --Categorias
 CREATE TABLE categorias (
     id_categoria INT PRIMARY KEY IDENTITY(1,1),
@@ -96,16 +103,19 @@ INSERT INTO perfiles (nombre_perfil) VALUES
 ('Usuario')
 select * from perfiles
 INSERT INTO categorias (nombre_categoria) VALUES
+('Sueldo'),
+('Otros'),
 ('Alquiler'),
 ('Servicios Públicos'),
 ('Transporte'),
 ('Alimentación'),
 ('Salud'),
 ('Educación'),
-('Ocio y Entretenimiento'),
+('Tecnologio y videojuegos'),
+('Mensualidades y plataformas'),
 ('Deudas y Préstamos'),
 ('Ahorros e Inversiones'),
-('Otros')
+('Ropa')
 select * from categorias
 INSERT INTO opciones (tipo_opcion) VALUES
 ('Adicional'),
