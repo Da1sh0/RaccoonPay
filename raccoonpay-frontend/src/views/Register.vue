@@ -69,50 +69,88 @@ const registrarUsuario = async () => {
 </script>
 
 <template>
-  <div>
-    <button @click="irAHome" class="btn">Volver</button>
-    <h2>Registro de Usuario</h2>
-    <form @submit.prevent="registrarUsuario">
-      <label>Nombres:</label>
-      <input v-model="nombres" placeholder="Nombres" required />
+  <div class="contenedor">
+    <!-- Barra de navegación -->
+    <div class="barra-navegacion">
+      <h2>Registro de Usuario</h2>
+      <button @click="irAHome" class="boton">Volver</button>
+    </div>
 
-      <label>Apellidos:</label>
-      <input v-model="apellidos" placeholder="Apellidos" required />
+    <!-- Sección principal del formulario -->
+    <div class="seccion-principal">
+      <h3 class="titulo">Crea tu cuenta</h3>
+      <p class="descripcion">Llena los siguientes campos para registrarte</p>
 
-      <label>Identificación:</label>
-      <input v-model="identificacion" placeholder="Identificación" required />
+      <form @submit.prevent="registrarUsuario" class="formulario">
+        <div class="campo">
+          <label>Nombres:</label>
+          <input v-model="nombres" placeholder="Nombres" required />
+        </div>
 
-      <label for="tipo_identificacion">Tipo de Identificación:</label>
-      <select v-model="tipo_identificacion" id="tipo_identificacion" required>
-        <option value="" disabled>Seleccione un tipo</option>
-        <option
-          v-for="tipo in tiposIdentificacion"
-          :key="tipo.id_tipo_identificacion"
-          :value="tipo.id_tipo_identificacion"
-        >
-          {{ tipo.nombre_tipo }}
-        </option>
-      </select>
+        <div class="campo">
+          <label>Apellidos:</label>
+          <input v-model="apellidos" placeholder="Apellidos" required />
+        </div>
 
-      <label>Celular:</label>
-      <input v-model="celular" placeholder="Celular" required />
+        <div class="campo">
+          <label>Identificación:</label>
+          <input v-model="identificacion" placeholder="Identificación" required />
+        </div>
 
-      <label>Correo:</label>
-      <input v-model="correo" type="email" placeholder="Correo" required />
+        <div class="campo">
+          <label for="tipo_identificacion">Tipo de Identificación:</label>
+          <select v-model="tipo_identificacion" id="tipo_identificacion" required>
+            <option value="" disabled>Seleccione un tipo</option>
+            <option
+              v-for="tipo in tiposIdentificacion"
+              :key="tipo.id_tipo_identificacion"
+              :value="tipo.id_tipo_identificacion"
+            >
+              {{ tipo.nombre_tipo }}
+            </option>
+          </select>
+        </div>
 
-      <label>Cargo:</label>
-      <input v-model="cargo" placeholder="Cargo" required />
+        <div class="campo">
+          <label>Celular:</label>
+          <input v-model="celular" placeholder="Celular" required />
+        </div>
 
-      <label>Usuario:</label>
-      <input v-model="login" placeholder="Usuario" required />
+        <div class="campo">
+          <label>Correo:</label>
+          <input v-model="correo" type="email" placeholder="Correo" required />
+        </div>
 
-      <label>Contraseña:</label>
-      <input v-model="contrasenna" type="password" placeholder="Contraseña" required />
+        <div class="campo">
+          <label>Cargo:</label>
+          <input v-model="cargo" placeholder="Cargo" required />
+        </div>
 
-      <button type="submit">Registrarse</button>
-    </form>
-    <button @click="irALogin" class="btn">Inciar sesion</button>
+        <div class="campo">
+          <label>Usuario:</label>
+          <input v-model="login" placeholder="Usuario" required />
+        </div>
 
-    <p>{{ mensaje }}</p>
+        <div class="campo">
+          <label>Contraseña:</label>
+          <input v-model="contrasenna" type="password" placeholder="Contraseña" required />
+        </div>
+
+        <button type="submit" class="boton-destacado">Registrarse</button>
+      </form>
+
+      <button @click="irALogin" class="boton">Iniciar sesión</button>
+
+      <p class="mensaje">{{ mensaje }}</p>
+    </div>
+
+    <!-- Pie de página -->
+    <div class="pie-pagina">
+      <p>&copy; 2025 RaccoonPay. Todos los derechos reservados.</p>
+    </div>
   </div>
 </template>
+
+<style scoped>
+  @import "@/assets/styles/styles.css";
+</style>
