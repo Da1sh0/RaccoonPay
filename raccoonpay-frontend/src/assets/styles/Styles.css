@@ -1,0 +1,75 @@
+.contenedor {
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .barra-navegacion {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    background: #138cc8;
+    color: white;
+  }
+  
+  .boton {
+    background: white;
+    color: #138cc8;
+    padding: 0.5rem 1rem;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  .seccion-principal {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #f4f4f4;
+  }
+  
+  .titulo {
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .descripcion {
+    margin-top: 1rem;
+  }
+  
+  .boton-destacado {
+    background: #138cc8;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+  
+  .seccion-servicios, .seccion-testimonios {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .subtitulo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .servicios, .testimonios {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .tarjeta-servicio, .testimonio {
+    background: #fff;
+    padding: 1rem;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .pie-pagina {
+    text-align: center;
+    padding: 1rem;
+    background: #138cc8;
+    color: white;
+  }

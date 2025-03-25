@@ -25,7 +25,6 @@ router.get("/types-identification", async (req, res) => {
     res.status(500).json({ message: "Error en el servidor" });
   }
 });
-
 // Registro de usuario
 router.post('/register', async (req, res) => {
   const { nombres, apellidos, identificacion, tipo_identificacion, celular, correo, cargo, login, contrasenna, perfil } = req.body;
@@ -159,6 +158,31 @@ router.post('/login', async (req, res) => {
   } catch (error) {
     console.error('Error en el servidor:', error);
     res.status(500).json({ message: 'Error en el servidor.' });
+  }
+});
+// Datos del usuario
+router.get("/data-user", async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1]; // Extrae el token del header
+  if (!token) {
+    return res.status(401).json({ message: 'Token no proporcionado' });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const id_usuario = decoded.id_usuario;
+    const pool = await sql.connect(dbConfig);
+    const result = await pool.request()
+    .input('id_usuario', sql.Int, id_usuario)
+    .query(`
+      SELECT p.nombres, p.apellidos, i.nombre_tipo, p.celular, p.correo, p.cargo 
+      FROM personas p
+      INNER JOIN usuarios u ON p.id_persona = u.id_persona
+      INNER JOIN tipos_identificacion i ON p.tipo_identificacion = i.id_tipo_identificacion
+      WHERE u.id_usuario = @id_usuario
+    `);
+    res.json(result.recordset[0]);
+  } catch (error) {
+    console.error("Error al obtener tipos de identificación:", error);
+    res.status(500).json({ message: "Error en el servidor" });
   }
 });
 // Recordar usuario
