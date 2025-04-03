@@ -5,6 +5,8 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const irARegistro = () => {router.push("/register")};
+const irALogin = () => {router.push("/login")};
+const irAForgotUser = () => {router.push("/forgotUser")};
 const irAHome = () => {router.push("/")};
 
 const login = ref("");
@@ -42,35 +44,48 @@ const iniciarSesion = async () => {
 </script>
 
 <template>
-  <div class="contenedor">
-    <nav class="barra-navegacion">
-      <button @click="irAHome" class="boton">Volver</button>
-    </nav>
-
-    <section class="seccion-principal">
-      <h2 class="titulo">Inicio de Sesión</h2>
-      <p class="descripcion">Ingrese sus credenciales para acceder a su cuenta.</p>
-
-      <form @submit.prevent="iniciarSesion" class="formulario">
-        <label for="usuario">Usuario:</label>
-        <input id="usuario" v-model="login" placeholder="Ingrese su usuario" required />
-
-        <label for="contrasena">Contraseña:</label>
-        <input id="contrasena" v-model="contrasenna" type="password" placeholder="Ingrese su contraseña" required />
-
-        <button type="submit" class="boton-destacado">Iniciar sesión</button>
-      </form>
-
-      <p class="mensaje">{{ mensaje }}</p>
-
-      <button @click="irARegistro" class="boton-destacado">Registrarse</button>
-    </section>
-
-    <footer class="pie-pagina">
-      © 2025 RaccoonPay - Todos los derechos reservados.
-    </footer>
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-left">
+        <h2>Incia sesion en RaccoonPay</h2>
+        <p>
+          Administra tus finanzas de manera fácil, rápida y segura.  
+          Con RaccoonPay, tienes el control total de tus ingresos y gastos en un solo lugar.💵
+        </p>
+        <ul>
+          <li>📊 Visualiza y organiza tus transacciones.</li>
+          <li>🔒 Seguridad garantizada para tu información.</li>
+          <li>⚡ Rápido, intuitivo y sin complicaciones.</li>
+        </ul>
+        <p>¿Aún no tienes cuenta? ¡Regístrate ahora y toma el control de tus finanzas!📈</p>
+        <div>
+          <button @click="irARegistro">Registrarse</button>
+          <button @click="irAHome">Volver</button>
+        </div>
+      </div>
+      <div class="login-right">
+        <div class="logo">
+          <img src="../assets/images/mapache.png" alt="Logo" />
+          <h2>RaccoonPay</h2>
+        </div>
+        <form class="form" @submit.prevent="iniciarSesion">
+          <div class="input-field">
+            <input id="usuario" v-model="login" placeholder="Usuario" required />
+          </div>
+            <div class="input-field">
+            <input id="contrasena" v-model="contrasenna" type="password" placeholder="Contraseña" required/>
+          </div>
+          <div class="buttons-links">
+            <a @click="irAForgotUser" class="links">Olvidaste tu usuario?</a>
+            <button type="submit" class="button">Iniciar Sesion</button>
+            <a href="#" class="links">Olvidaste tu contraseña?</a>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
-<style scoped>
-  @import "@/assets/styles/styles.css";
+
+<style>
+  @import "@/assets/styles/login.css";
 </style>

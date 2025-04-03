@@ -12,7 +12,6 @@ const irALogin = () => { router.push("/login"); };
     <header class="barra-navegacion">
       <div class="logo">RaccoonPay</div>
       <nav>
-        <button @click="irARegistro" class="boton">Registrarse</button>
         <button @click="irALogin" class="boton">Iniciar sesión</button>
       </nav>
     </header>
@@ -20,9 +19,9 @@ const irALogin = () => { router.push("/login"); };
     <!-- Sección Principal -->
     <section class="seccion-principal">
       <div class="contenido">
-        <h1 class="titulo">Gestión de Pagos Fácil y Segura</h1>
+        <h1 class="titulo">Gestione su sueldo de manera fácil y segura</h1>
         <p class="descripcion">
-          Simplificamos la administración de sueldos y pagos con una plataforma intuitiva y eficiente.
+          Optimiza la administración de tu sueldo, pagos y gastos con nuestra plataforma intuitiva y eficiente. Te permite tus gestionar ingresos y llevar un registro detallado de tus gastos de manera fácil y segura. Asegurando una experiencia sin complicaciones y adaptada a tus necesidades. 
         </p>
         <button @click="irARegistro" class="boton-destacado">Comenzar Ahora</button>
       </div>
@@ -32,7 +31,7 @@ const irALogin = () => { router.push("/login"); };
     <section class="seccion-servicios">
       <h2 class="subtitulo">Nuestros Servicios</h2>
       <div class="servicios">
-        <div class="tarjeta-servicio">Gestión de Nómina</div>
+        <div class="tarjeta-servicio">Gestión de su Sueldo</div>
         <div class="tarjeta-servicio">Control de Gastos</div>
         <div class="tarjeta-servicio">Reportes y Análisis</div>
       </div>
@@ -42,8 +41,9 @@ const irALogin = () => { router.push("/login"); };
     <section class="seccion-testimonios">
       <h2 class="subtitulo">Lo que dicen nuestros clientes</h2>
       <div class="testimonios">
-        <p class="testimonio">"RaccoonPay ha transformado la forma en que administramos nuestros pagos."</p>
+        <p class="testimonio">"RaccoonPay ha transformado la forma en que administro mi sueldo."</p>
         <p class="testimonio">"Fácil de usar y altamente eficiente."</p>
+        <p class="testimonio">"Muyutili al momento de gestionar mi sueldo y saber que gastos tengo."</p>
       </div>
     </section>
 
@@ -53,6 +53,6 @@ const irALogin = () => { router.push("/login"); };
     </footer>
   </div>
 </template>
-<style scoped>
+<style>
   @import "@/assets/styles/styles.css";
 </style>

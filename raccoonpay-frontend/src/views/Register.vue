@@ -69,88 +69,76 @@ const registrarUsuario = async () => {
 </script>
 
 <template>
-  <div class="contenedor">
-    <!-- Barra de navegación -->
-    <div class="barra-navegacion">
-      <h2>Registro de Usuario</h2>
-      <button @click="irAHome" class="boton">Volver</button>
-    </div>
-
-    <!-- Sección principal del formulario -->
-    <div class="seccion-principal">
-      <h3 class="titulo">Crea tu cuenta</h3>
-      <p class="descripcion">Llena los siguientes campos para registrarte</p>
-
-      <form @submit.prevent="registrarUsuario" class="formulario">
-        <div class="campo">
-          <label>Nombres:</label>
-          <input v-model="nombres" placeholder="Nombres" required />
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-left">
+        <h2>Registrate en RaccoonPay</h2>
+        <p>
+          Administra tus finanzas de manera fácil, rápida y segura.  
+          Con RaccoonPay, tienes el control total de tus ingresos y gastos en un solo lugar.💵
+        </p>
+        <ul>
+          <li>📊 Visualiza y organiza tus transacciones.</li>
+          <li>🔒 Seguridad garantizada para tu información.</li>
+          <li>⚡ Rápido, intuitivo y sin complicaciones.</li>
+        </ul>
+        <p>¿Ya te encuetras registrado? ¡Inicia sesion y continua tomadno el control de tus finanzas!📈</p>
+        <div>
+          <button @click="irALogin">Iniciar sesion</button>
+          <button @click="irAHome">Volver</button>
         </div>
-
-        <div class="campo">
-          <label>Apellidos:</label>
-          <input v-model="apellidos" placeholder="Apellidos" required />
+      </div>
+      <div class="register-right">
+        <div class="logo">
+          <img src="../assets/images/mapache.png" alt="Logo" />
+          <h2>RaccoonPay</h2>
         </div>
-
-        <div class="campo">
-          <label>Identificación:</label>
-          <input v-model="identificacion" placeholder="Identificación" required />
-        </div>
-
-        <div class="campo">
-          <label for="tipo_identificacion">Tipo de Identificación:</label>
-          <select v-model="tipo_identificacion" id="tipo_identificacion" required>
-            <option value="" disabled>Seleccione un tipo</option>
-            <option
-              v-for="tipo in tiposIdentificacion"
-              :key="tipo.id_tipo_identificacion"
-              :value="tipo.id_tipo_identificacion"
-            >
-              {{ tipo.nombre_tipo }}
-            </option>
-          </select>
-        </div>
-
-        <div class="campo">
-          <label>Celular:</label>
-          <input v-model="celular" placeholder="Celular" required />
-        </div>
-
-        <div class="campo">
-          <label>Correo:</label>
-          <input v-model="correo" type="email" placeholder="Correo" required />
-        </div>
-
-        <div class="campo">
-          <label>Cargo:</label>
-          <input v-model="cargo" placeholder="Cargo" required />
-        </div>
-
-        <div class="campo">
-          <label>Usuario:</label>
-          <input v-model="login" placeholder="Usuario" required />
-        </div>
-
-        <div class="campo">
-          <label>Contraseña:</label>
-          <input v-model="contrasenna" type="password" placeholder="Contraseña" required />
-        </div>
-
-        <button type="submit" class="boton-destacado">Registrarse</button>
-      </form>
-
-      <button @click="irALogin" class="boton">Iniciar sesión</button>
-
-      <p class="mensaje">{{ mensaje }}</p>
-    </div>
-
-    <!-- Pie de página -->
-    <div class="pie-pagina">
-      <p>&copy; 2025 RaccoonPay. Todos los derechos reservados.</p>
+        <form @submit.prevent="registrarUsuario" class="form">
+          <div class="input-field">
+            <input v-model="nombres" placeholder="Nombres" required />
+          </div>
+          <div class="input-field">
+            <input v-model="apellidos" placeholder="Apellidos" required />
+          </div>
+          <div class="input-field">
+            <input v-model="identificacion" placeholder="Identificación" required />
+          </div>
+          <div class="input-field">
+            <select v-model="tipo_identificacion" id="tipo_identificacion" required>
+              <option value="" disabled>Tipo Identificación</option>
+              <option
+                v-for="tipo in tiposIdentificacion"
+                :key="tipo.id_tipo_identificacion"
+                :value="tipo.id_tipo_identificacion"
+              >
+                {{ tipo.nombre_tipo }}
+              </option>
+            </select>
+          </div>
+          <div class="input-field">
+            <input v-model="celular" placeholder="Celular" required />
+          </div>
+          <div class="input-field">
+            <input v-model="correo" type="email" placeholder="Correo" required />
+          </div>
+          <div class="input-field">
+            <input v-model="cargo" placeholder="Cargo" required />
+          </div>
+          <div class="input-field">
+            <input v-model="login" placeholder="Usuario" required />
+          </div>
+          <div class="input-field">
+            <input v-model="contrasenna" type="password" placeholder="Contraseña" required />
+          </div>
+          <div class="buttons-linksR">
+            <button type="submit" class="button">Registrarse</button>
+          </div>
+        </form>
+        <p class="mensaje">{{ mensaje }}</p>
+      </div>
     </div>
   </div>
 </template>
-
-<style scoped>
-  @import "@/assets/styles/styles.css";
+<style>
+  @import "@/assets/styles/login.css";
 </style>

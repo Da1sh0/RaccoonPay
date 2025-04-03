@@ -200,19 +200,32 @@ router.post('/forgot-user', async (req, res) => {
       if (!result.recordset.length) {
         return res.status(404).json({ message: 'Correo no encontrado.' });
       }
-      const user = result.recordset[0];
-      // Enviar correo con el enlace
+      const user = result.recordset[0]; 
       const mailOptions = {
-          from: '"RaccoonPay" <mensajesconapi@gmail.com>',
-          to: correo,
-          subject: 'Recuperación de usuario',
-          text: `Tu usuario registrado es: ${user.login}`
-      };
+        from: '"RaccoonPay" <mensajesconapi@gmail.com>',
+        to: correo,
+        subject: 'Recuperación de usuario',
+        html: `
+            <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; border: 1px solid #ddd; border-radius: 10px; padding: 20px; background-color: #f9f9f9;">
+              <h2 style="text-align: center; color: #3cb371;">Recuperación de Usuario</h2>
+                <p>Hola,</p>
+                <p>Hemos recibido una solicitud para recuperar tu usuario en <b>RaccoonPay</b>. Aquí tienes tu nombre de usuario:</p>
+                <div style="background-color: #eaffea; padding: 10px; text-align: center; font-size: 18px; font-weight: bold; border-radius: 5px; color: #2e8b57;">
+                  ${user.login}
+                </div>
+                <p>Si no solicitaste esta recuperación, ignora este mensaje.</p>
+                <hr style="border: none; border-top: 1px solid #ddd;">
+                <p style="text-align: center; font-size: 12px; color: #666;">
+                  © 2025 RaccoonPay. Todos los derechos reservados.
+                </p>
+            </div>
+        `
+    };
       await transporter.sendMail(mailOptions);
       res.status(200).json({ message: 'Correo enviado. Revisa tu bandeja de entrada.' });
   } catch (error) {
-      console.error('Error:', error);
-      res.status(500).json({ message: 'Error en el servidor.' });
+    console.error('Error en forgot-user:', error); // 🔍 Muestra el error completo
+    res.status(500).json({ message: 'Error en el servidor.', error: error.message });
   }
 });
 // Cambiar la contraseña

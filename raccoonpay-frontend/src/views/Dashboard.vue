@@ -90,6 +90,6 @@ onMounted(fetchUserData);
     </footer>
   </div>
 </template>
-<style scoped>
+<style>
   @import "@/assets/styles/styles.css";
 </style>

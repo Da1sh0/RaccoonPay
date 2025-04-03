@@ -1,75 +1,131 @@
+:root {
+    --color-primario: #138cc8;
+    --color-texto: #333;
+    --color-fondo: #f4f4f4;
+    --color-blanco: #fff;
+    --color-bordes: #afafaf;
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
 .contenedor {
     font-family: Arial, sans-serif;
-    color: #333;
-  }
-  
-  .barra-navegacion {
+    color: var(--color-texto);
+}
+.barra-navegacion {
     display: flex;
     justify-content: space-between;
-    padding: 1rem;
-    background: #138cc8;
-    color: white;
-  }
-  
-  .boton {
-    background: white;
-    color: #138cc8;
-    padding: 0.5rem 1rem;
+    padding: 10px;
+    align-items: center;
+    background: var(--color-primario);
+    color: var(--color-blanco);
+    text-align: center;
+    padding: 5px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+}  
+.boton {
+    background: var(--color-blanco);
+    color: var(--color-primario);
+    padding: 10px 10px;
     border: none;
     cursor: pointer;
     margin-left: 10px;
-  }
-  
-  .seccion-principal {
-    text-align: center;
-    padding: 3rem 1rem;
-    background: #f4f4f4;
-  }
-  
-  .titulo {
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .descripcion {
-    margin-top: 1rem;
-  }
-  
-  .boton-destacado {
-    background: #138cc8;
-    color: white;
-    padding: 1rem 2rem;
-    border: none;
-    cursor: pointer;
-    margin-top: 1rem;
-  }
-  
-  .seccion-servicios, .seccion-testimonios {
-    text-align: center;
-    padding: 2rem;
-  }
-  
-  .subtitulo {
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .servicios, .testimonios {
+}
+.seccion-principal {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-  }
-  
-  .tarjeta-servicio, .testimonio {
-    background: #fff;
-    padding: 1rem;
-    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
-  }
-  
-  .pie-pagina {
     text-align: center;
-    padding: 1rem;
-    background: #138cc8;
-    color: white;
-  }
+    align-items: center;
+    padding: 0px;
+    background: var(--color-fondo);
+    height: 100vh;
+}
+.boton-destacado {
+    background: var(--color-primario);
+    color: var(--color-blanco);
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin: 20px 10px 0px 10px;
+} 
+.seccion-servicios, .seccion-testimonios {
+    text-align: center;
+    padding: 20px;
+} 
+.servicios, .testimonios {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+} 
+.tarjeta-servicio, .testimonio {
+    background: var(--color-blanco);
+    padding: 10px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+} 
+.pie-pagina {
+    text-align: center;
+    padding: 5px;
+    background: var(--color-primario);
+    color: var(--color-blanco);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.contenedor-principal {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    background: linear-gradient(to right, var(--color-primario) 50%, var(--color-blanco) 50%);
+    border-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+    margin: auto;
+}
+.parte1{
+    flex: 1;
+    padding: 20px;
+}
+.parte1 p{
+    font-size: 50px;
+    font-weight: bold;
+    padding-bottom: 0;
+    margin-bottom: 10px;
+}
+.parte1 img{
+    width: 400px;
+}
+.parte2{
+    flex: 1;
+    padding: 20px;
+}
+.parte2 .campo{
+    padding: 10px;
+}
+.parte2 .titulo {
+    font-size: 40px;
+    font-weight: bold;
+    margin: 0;
+} 
+.parte2 .descripcion{
+    font-size: 15px;
+}
+.subtitulo {
+    font-size: 15px;
+    font-weight: bold;
+} 
+.formulario input,
+.formulario select{
+    border: solid 0px;
+    border-bottom: solid 1px var(--color-texto);
+    width: 50%;
+    padding: 5px;
+}
