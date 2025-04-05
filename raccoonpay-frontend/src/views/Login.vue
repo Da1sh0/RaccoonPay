@@ -2,19 +2,25 @@
 import { ref, onMounted} from "vue";
 import { useRouter } from "vue-router";
 
-
 const router = useRouter();
 const irARegistro = () => {router.push("/register")};
-const irALogin = () => {router.push("/login")};
 const irAForgotUser = () => {router.push("/forgotUser")};
+const irAForgotPassword = () => {router.push("/forgotPassword")};
 const irAHome = () => {router.push("/")};
 
 const login = ref("");
 const contrasenna = ref("");
 const mensaje = ref("");
+const cargando = ref(false);
+const mostrarModal = ref(false);
 
+const cerrarModal = () => {
+  mostrarModal.value = false;
+};
 // Función para Iniciar sesion
 const iniciarSesion = async () => {
+  if (cargando.value) return;
+  cargando.value = true;
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/login`,{
       method: "POST",
@@ -26,7 +32,7 @@ const iniciarSesion = async () => {
     });
 
     if (!response.ok) {
-      throw new Error(`Error ${response.status}: ${await response.text()}`);
+      throw new Error(await response.text());
     }
     const data = await response.json();
     console.log("Respuesta del servidor:", data);
@@ -38,7 +44,10 @@ const iniciarSesion = async () => {
     router.push("/dashboard"); 
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
-    mensaje.value = "Error al iniciar sesión. Verifique sus credenciales.";
+    mensaje.value = "Usuario o contraseña incorrectas. Valide nuvamente con las credenciales correctas";
+    mostrarModal.value = true;
+  } finally {
+    cargando.value = false;
   }
 };
 </script>
@@ -77,11 +86,22 @@ const iniciarSesion = async () => {
           </div>
           <div class="buttons-links">
             <a @click="irAForgotUser" class="links">Olvidaste tu usuario?</a>
-            <button type="submit" class="button">Iniciar Sesion</button>
-            <a href="#" class="links">Olvidaste tu contraseña?</a>
+            <button type="submit" class="button" :disabled="cargando">
+              <span v-if="cargando" class="loader"></span>
+              <span v-else>Iniciar sesión</span>
+            </button>
+            <a @click="irAForgotPassword" class="links">Olvidaste tu contraseña?</a>
           </div>
         </form>
       </div>
+    </div>
+  </div>
+  <!-- MODAL PERSONALIZADA -->
+  <div v-if="mostrarModal" class="modal-overlay">
+    <div class="modal">
+      <h2>RaccoonPay</h2>
+      <p>{{ mensaje }}</p>
+      <button @click="cerrarModal" class="modal-button">Cerrar</button>
     </div>
   </div>
 </template>

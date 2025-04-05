@@ -255,12 +255,28 @@ router.post('/recovery-password', async (req, res) =>{
       WHERE id_usuario = @id_usuario
     `);
     // Envio del token al correo
+    const cambioContrasenna = `https://x2t3hd44-5173.brs.devtunnels.ms/resetPassword?token=${token}`;
     const mailOptions = {
       from: '"RaccoonPay" <mensajesconapi@gmail.com>',
       to: correo,
       subject: 'Recuperación de contraseña',
-      text: `Usa este enlace para cambiar tu contraseña: ${process.env.API_URL}/reset-password?token=${token}`
+      html: `
+            <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; border: 1px solid #ddd; border-radius: 10px; padding: 20px; background-color: #f9f9f9;">
+              <h2 style="text-align: center; color: #3cb371;">Recuperación de Usuario</h2>
+                <p>Hola,</p>
+                <p>Hemos recibido una solicitud para cambio de tu contraseña en <b>RaccoonPay</b>. Acceda al sigueinte link para realizar el cambio de contraseñá:</p>
+                <div style="background-color: #eaffea; padding: 10px; text-align: center; font-size: 18px; font-weight: bold; border-radius: 5px; color: #2e8b57;">
+                  <a style="color: #3cb371;" href="${cambioContrasenna}" target="_blank" rel="noopener noreferrer">Cambiar contraseña</a>
+                </div>
+                <p>Si no solicitaste esta recuperación, ignora este mensaje.</p>
+                <hr style="border: none; border-top: 1px solid #ddd;">
+                <p style="text-align: center; font-size: 12px; color: #666;">
+                  © 2025 RaccoonPay. Todos los derechos reservados.
+                </p>
+            </div>
+        `
     };
+    
     await transporter.sendMail(mailOptions);
     res.status(200).json({ message: 'Correo enviado. Revisa tu bandeja de entrada.' });
   } catch (error) {

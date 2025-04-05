@@ -8,27 +8,22 @@ const correo = ref("");
 const mensaje = ref("");
 const mostrarModal = ref(false);
 const esExito = ref(false);
-const cargando = ref(false);
+const cargando = ref(false); // Agregada para manejar el estado de carga
 
 // Función para enviar correo con el usuario
-const olvidoUsuario = async () => {
+const olvidoContra = async () => {
   if (cargando.value) return; // Evita múltiples clics
-
   cargando.value = true; // Activa el estado de carga
-
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/forgot-user`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/recovery-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ correo: correo.value }),
     });
-
     const data = await response.json();
-    
     mensaje.value = data.message;
     esExito.value = response.ok;
     mostrarModal.value = true;
-
   } catch (error) {
     console.error("Error en la recuperación:", error);
     mensaje.value = "Error en el servidor.";
@@ -56,9 +51,9 @@ const cerrarModal = () => {
           <img src="../assets/images/mapache.png" alt="Logo" />
           <h2>RaccoonPay</h2>
         </div>
-        <form class="form" @submit.prevent="olvidoUsuario">
+        <form class="form" @submit.prevent="olvidoContra">
           <div class="input-field">
-            <label for="correo">Ingrese el correo registrado <br>para recuperar su usuario.</label>
+            <label for="correo">Ingrese el correo registrado <br>para restablecer su contraseña.</label>
           </div>
           <div class="input-field">
             <input v-model="correo" type="email" placeholder="Correo" required />

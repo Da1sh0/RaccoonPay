@@ -17,6 +17,12 @@ const cargo = ref("");
 const login = ref("");
 const contrasenna = ref("");
 const mensaje = ref("");
+const cargando = ref(false);
+const mostrarModal = ref(false);
+
+const cerrarModal = () => {
+  mostrarModal.value = false;
+};
 
 // Variable para almacenar los tipos de identificación
 const tiposIdentificacion = ref([]);
@@ -37,6 +43,7 @@ const fetchTiposIdentificacion = async () => {
 onMounted(fetchTiposIdentificacion);
 // Función para registrar usuario
 const registrarUsuario = async () => {
+  cargando.value = true;
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
       method: "POST",
@@ -61,9 +68,13 @@ const registrarUsuario = async () => {
     const data = await response.json();
     console.log("Respuesta del servidor:", data);
     mensaje.value = data.message || "Registro exitoso";
+    mostrarModal.value = true;
   } catch (error) {
     console.error("Error al registrar usuario:", error);
     mensaje.value = "Error al registrar usuario";
+    mostrarModal.value = true;
+  } finally {
+    cargando.value = false; // desactivar loader
   }
 };
 </script>
@@ -131,13 +142,26 @@ const registrarUsuario = async () => {
             <input v-model="contrasenna" type="password" placeholder="Contraseña" required />
           </div>
           <div class="buttons-linksR">
-            <button type="submit" class="button">Registrarse</button>
+            <button type="submit" class="button" :disabled="cargando">
+              <span v-if="cargando" class="loader"></span>
+              <span v-else>Registrarse</span>
+            </button>
           </div>
         </form>
         <p class="mensaje">{{ mensaje }}</p>
       </div>
     </div>
   </div>
+
+<!-- MODAL PERSONALIZADA -->
+<div v-if="mostrarModal" class="modal-overlay">
+  <div class="modal">
+    <h2>RaccoonPay</h2>
+    <p>{{ mensaje }}</p>
+    <button @click="cerrarModal" class="modal-button">Cerrar</button>
+  </div>
+</div>
+
 </template>
 <style>
   @import "@/assets/styles/login.css";
