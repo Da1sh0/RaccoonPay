@@ -266,17 +266,8 @@ button:disabled {
     animation: spin 1s linear infinite;
     display: inline-block;
     vertical-align: middle;
-}
-  
+} 
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
-/* <button type="submit" 
-class="button" 
-:disabled="cargando">
-<span v-if="cargando" 
-class="loader"></span>
-<span v-else>Iniciar sesión</span>
-</button> */

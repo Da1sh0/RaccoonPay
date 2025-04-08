@@ -6,5 +6,5 @@
   </div>
 </template>
 <style>
-  @import "@/assets/styles/styles.css";
+  @import "@/assets/styles/login.css";
 </style>

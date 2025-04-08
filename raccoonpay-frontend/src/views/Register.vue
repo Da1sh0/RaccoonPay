@@ -29,7 +29,7 @@ const tiposIdentificacion = ref([]);
 // Función para obtener los tipos de identificación desde el backend
 const fetchTiposIdentificacion = async () => {
   try {
-    const response = await fetch("https://x2t3hd44-3000.brs.devtunnels.ms/api/types-identification");
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/types-identification`);
     if (!response.ok) {
       throw new Error(`Error ${response.status}: ${await response.text()}`);
     }
