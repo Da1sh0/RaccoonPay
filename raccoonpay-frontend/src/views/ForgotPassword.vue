@@ -81,5 +81,5 @@ const cerrarModal = () => {
 </template>
 
 <style>
-@import "@/assets/styles/login.css";
+  @import "../assets/styles/login.css";
 </style>

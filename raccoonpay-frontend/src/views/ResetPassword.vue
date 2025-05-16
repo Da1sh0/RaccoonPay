@@ -89,7 +89,7 @@ const cerrarModal = () => {
   </template>
   
 <style>
-@import "@/assets/styles/login.css";
+@import "../assets/styles/login.css";
 .buttons {
     display: flex;
     flex-direction: row;

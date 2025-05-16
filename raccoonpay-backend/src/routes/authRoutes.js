@@ -83,14 +83,26 @@ router.post('/register', async (req, res) => {
         // Confirmar la transacción
         await transaction.commit();
         // Enviar correo con el token
-        const activationLink = `${process.env.API_URL}/activate/${token}`;
+        const activationLink = `https://x2t3hd44-5173.brs.devtunnels.ms/activatedUser/${token}`;
+
         await transporter.sendMail({
             from: '"RaccoonPay" <mensajesconapi@gmail.com>',
             to: correo,
             subject: 'Activación de cuenta',
-            html: `<p>Bienvenido a RacconPay ${nombres} ${apellidos},</p>
-                    <p>Haz clic en el siguiente enlace para activar tu cuenta:</p>
-                    <a href="${activationLink}">Activar cuenta</a>`
+            html: `
+              <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; border: 1px solid #ddd; border-radius: 10px; padding: 20px; background-color: #f9f9f9;">
+                <h2 style="text-align: center; color: #3cb371;">Bienvenido a RacconPay</h2>
+                  <p>Hola, ${nombres} ${apellidos}</p>
+                  <p>Haz clic en el siguiente enlace para activar tu cuenta:</p>
+                  <div style="background-color: #eaffea; padding: 10px; text-align: center; font-size: 18px; font-weight: bold; border-radius: 5px; color: #2e8b57;">
+                    <a style="color: #3cb371;" href="${activationLink}">Activar cuenta</a>
+                  </div>
+                  <hr style="border: none; border-top: 1px solid #ddd;">
+                  <p style="text-align: center; font-size: 12px; color: #666;">
+                    © 2025 RaccoonPay. Todos los derechos reservados.
+                  </p>
+              </div>
+            `
         });
           res.status(201).json({ message: 'Usuario registrado. Revisa tu correo para activar la cuenta.' });
       } catch (error) {

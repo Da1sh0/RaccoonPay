@@ -6,7 +6,7 @@ const router = useRouter();
 const irARegistro = () => {router.push("/register")};
 const irAForgotUser = () => {router.push("/forgotUser")};
 const irAForgotPassword = () => {router.push("/forgotPassword")};
-const irAHome = () => {router.push("/")};
+// const irAHome = () => {router.push("/")};
 
 const login = ref("");
 const contrasenna = ref("");
@@ -69,7 +69,7 @@ const iniciarSesion = async () => {
         <p>¿Aún no tienes cuenta? ¡Regístrate ahora y toma el control de tus finanzas!📈</p>
         <div>
           <button @click="irARegistro">Registrarse</button>
-          <button @click="irAHome">Volver</button>
+          <!-- <button @click="irAHome">Volver</button> -->
         </div>
       </div>
       <div class="login-right">
@@ -107,5 +107,5 @@ const iniciarSesion = async () => {
 </template>
 
 <style>
-  @import "@/assets/styles/login.css";
+@import "../assets/styles/login.css";
 </style>

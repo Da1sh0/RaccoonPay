@@ -4,7 +4,7 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const irALogin = () => {router.push("/login")};
-const irAHome = () => {router.push("/")};
+// const irAHome = () => {router.push("/")};
 
 // Variables reactivas para los inputs
 const nombres = ref("");
@@ -19,10 +19,6 @@ const contrasenna = ref("");
 const mensaje = ref("");
 const cargando = ref(false);
 const mostrarModal = ref(false);
-
-const cerrarModal = () => {
-  mostrarModal.value = false;
-};
 
 // Variable para almacenar los tipos de identificación
 const tiposIdentificacion = ref([]);
@@ -42,7 +38,23 @@ const fetchTiposIdentificacion = async () => {
 // Ejecutar la función cuando se monta el componente
 onMounted(fetchTiposIdentificacion);
 // Función para registrar usuario
+const esExito = ref(false); // Define la variable esExito
+
 const registrarUsuario = async () => {
+  // Validación antes de enviar
+  const celularRegex = /^[0-9]{10}$/;
+  if (!celularRegex.test(celular.value)) {
+    mensaje.value = "El número de celular debe tener exactamente 10 Números.";
+    mostrarModal.value = true;
+    return;
+  }
+  const identificacionRegex = /^[0-9]+$/;
+  if (!identificacionRegex.test(identificacion.value)) {
+    mensaje.value = "El número de identificación debe ser unicamente números.";
+    mostrarModal.value = true;
+    return;
+  }
+
   cargando.value = true;
   try {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/register`, {
@@ -65,18 +77,30 @@ const registrarUsuario = async () => {
     if (!response.ok) {
       throw new Error(`Error ${response.status}: ${await response.text()}`);
     }
+
     const data = await response.json();
     console.log("Respuesta del servidor:", data);
     mensaje.value = data.message || "Registro exitoso";
+    esExito.value = true; // Establece esExito en true si el registro fue exitoso
     mostrarModal.value = true;
+
   } catch (error) {
     console.error("Error al registrar usuario:", error);
     mensaje.value = "Error al registrar usuario";
+    esExito.value = false; // Si hubo un error, establecemos esExito como false
     mostrarModal.value = true;
   } finally {
-    cargando.value = false; // desactivar loader
+    cargando.value = false;
   }
 };
+
+const cerrarModal = () => {
+  mostrarModal.value = false;
+  if (esExito.value) {
+    router.push("/login"); // Redirige a login si el registro fue exitoso
+  }
+};
+
 </script>
 
 <template>
@@ -96,7 +120,7 @@ const registrarUsuario = async () => {
         <p>¿Ya te encuetras registrado? ¡Inicia sesion y continua tomadno el control de tus finanzas!📈</p>
         <div>
           <button @click="irALogin">Iniciar sesion</button>
-          <button @click="irAHome">Volver</button>
+          <!-- <button @click="irAHome">Volver</button> -->
         </div>
       </div>
       <div class="register-right">
@@ -112,7 +136,7 @@ const registrarUsuario = async () => {
             <input v-model="apellidos" placeholder="Apellidos" required />
           </div>
           <div class="input-field">
-            <input v-model="identificacion" placeholder="Identificación" required />
+            <input v-model="identificacion" placeholder="Identificación" required/>
           </div>
           <div class="input-field">
             <select v-model="tipo_identificacion" id="tipo_identificacion" required>
@@ -127,7 +151,7 @@ const registrarUsuario = async () => {
             </select>
           </div>
           <div class="input-field">
-            <input v-model="celular" placeholder="Celular" required />
+            <input v-model="celular" type="tel" placeholder="Celular" required/>
           </div>
           <div class="input-field">
             <input v-model="correo" type="email" placeholder="Correo" required />
@@ -164,5 +188,5 @@ const registrarUsuario = async () => {
 
 </template>
 <style>
-  @import "@/assets/styles/login.css";
+@import "../assets/styles/login.css";
 </style>

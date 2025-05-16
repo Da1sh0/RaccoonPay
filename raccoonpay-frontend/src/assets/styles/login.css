@@ -124,7 +124,17 @@ body {
     align-items: center;
     margin-bottom: 30px;
 }
-.buttons-links button {
+.buttonActivate {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    margin-top: 10px;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.buttons-links button,
+.buttonActivate button  {
     width: 160px;
     padding: 12px;
     background: #3cb371;
