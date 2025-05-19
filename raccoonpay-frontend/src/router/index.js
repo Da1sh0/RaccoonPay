@@ -5,7 +5,7 @@ import Dashboard from "../views/Dashboard.vue";
 import ForgotUser from "../views/ForgotUser.vue"
 import ForgotPassword from "../views/ForgotPassword.vue";
 import ResetPassword from "../views/ResetPassword.vue";
-import ActivateUser from "../views/ActivateUser.vue";
+import Activate from "../views/Activate.vue";
 
 const routes = [
   { path: "/", component: Login },
@@ -15,7 +15,7 @@ const routes = [
   { path: "/forgotUser", component: ForgotUser},
   { path: "/forgotPassword", component: ForgotPassword},
   { path: "/resetPassword", component: ResetPassword},
-  { path: "/activatedUser", component: ActivateUser},
+  { path: "/activate", component: Activate},
 ];
 
 const router = createRouter({

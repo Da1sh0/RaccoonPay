@@ -97,7 +97,7 @@ const registrarUsuario = async () => {
 const cerrarModal = () => {
   mostrarModal.value = false;
   if (esExito.value) {
-    router.push("/login"); // Redirige a login si el registro fue exitoso
+    router.push("/activate");
   }
 };
 

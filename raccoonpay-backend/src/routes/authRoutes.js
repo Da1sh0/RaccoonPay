@@ -83,8 +83,6 @@ router.post('/register', async (req, res) => {
         // Confirmar la transacción
         await transaction.commit();
         // Enviar correo con el token
-        const activationLink = `https://x2t3hd44-5173.brs.devtunnels.ms/activatedUser/${token}`;
-
         await transporter.sendMail({
             from: '"RaccoonPay" <mensajesconapi@gmail.com>',
             to: correo,
@@ -93,9 +91,9 @@ router.post('/register', async (req, res) => {
               <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; border: 1px solid #ddd; border-radius: 10px; padding: 20px; background-color: #f9f9f9;">
                 <h2 style="text-align: center; color: #3cb371;">Bienvenido a RacconPay</h2>
                   <p>Hola, ${nombres} ${apellidos}</p>
-                  <p>Haz clic en el siguiente enlace para activar tu cuenta:</p>
+                  <p>A continuación proporcionamos el token para activar tu cuenta:</p>
                   <div style="background-color: #eaffea; padding: 10px; text-align: center; font-size: 18px; font-weight: bold; border-radius: 5px; color: #2e8b57;">
-                    <a style="color: #3cb371;" href="${activationLink}">Activar cuenta</a>
+                    <p style="color: #3cb371;">${token}</p>
                   </div>
                   <hr style="border: none; border-top: 1px solid #ddd;">
                   <p style="text-align: center; font-size: 12px; color: #666;">
@@ -115,7 +113,54 @@ router.post('/register', async (req, res) => {
       res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
-// Activar el usurio mediante Token
+// Activar el usuario mediante Token con Agente
+router.post('/activate-agent', async (req, res) => {
+  const { token } = req.body;
+  try {
+    const pool = await sql.connect();
+    // Buscar el usuario por token
+    const result = await pool.request()
+      .input('token', sql.NVarChar, token)
+      .query(`
+        SELECT u.id_usuario, p.correo, p.nombres, p.apellidos
+        FROM Usuarios u
+        JOIN Personas p ON u.id_persona = p.id_persona
+        WHERE u.token_activacion = @token
+      `);
+    if (result.recordset.length === 0) {
+      return res.status(400).json({ message: 'Token inválido o expirado' });
+    }
+    const { id_usuario, correo, nombres, apellidos } = result.recordset[0];
+    // Activar la cuenta
+    await pool.request()
+      .input('id_usuario', sql.Int, id_usuario)
+      .query('UPDATE Usuarios SET activo = 1, token_activacion = NULL WHERE id_usuario = @id_usuario');
+    // Enviar correo de confirmación
+    const inicio = `https://x2t3hd44-5173.brs.devtunnels.ms`;
+    await transporter.sendMail({
+      from: '"RaccoonPay" <mensajesconapi@gmail.com>',
+      to: correo,
+      subject: 'Cuenta activada exitosamente',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 500px; margin: auto; border: 1px solid #ddd; border-radius: 10px; padding: 20px; background-color: #f9f9f9;">
+          <h2 style="text-align: center; color: #3cb371;">¡Tu cuenta ha sido activada!</h2>
+          <p>Hola, ${nombres} ${apellidos}</p>
+          <p>Tu cuenta en <strong>RaccoonPay</strong> ha sido activada correctamente. Ya puedes iniciar sesión en la plataforma haciendo click <a style="color: #3cb371;" href="${inicio}" target="_blank" rel="noopener noreferrer">Aqui.</a></p>
+          <hr style="border: none; border-top: 1px solid #ddd;">
+          <p style="text-align: center; font-size: 12px; color: #666;">
+            © 2025 RaccoonPay. Todos los derechos reservados.
+          </p>
+        </div>
+      `
+    });
+    return res.json({ message: 'Cuenta activada y correo enviado con éxito' });
+  } catch (error) {
+    console.error('Error en la activación:', error);
+    return res.status(500).json({ message: 'Error interno al activar la cuenta' });
+  }
+});
+
+// Activar el usuario mediante Token
 router.get('/activate/:token', async (req, res) => {
   const { token } = req.params;
   try {
